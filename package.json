@@ -7,20 +7,18 @@
     "lib": "lib"
   },
   "dependencies": {
+    "ascii-art": "^2.5.0",
     "console.table": "^0.10.0",
     "inquirer": "^8.0.0",
     "mysql2": "^2.2.5"
   },
   "devDependencies": {},
   "scripts": {
-  "migrate": "sqlite3 db/employeetracker.db < db/schema.sql",
-   "seed": "sqlite3 db/employeetracker.db < db/seeds.sql",
-   "db": "sqlite3 db/employeetracker.db",
-  "start": "node app.js"
-},
-
- 
-
+    "migrate": "sqlite3 db/employeetracker.db < db/schema.sql",
+    "seed": "sqlite3 db/employeetracker.db < db/seeds.sql",
+    "db": "sqlite3 db/employeetracker.db",
+    "start": "node app.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/blee2013/employee-tracker.git"

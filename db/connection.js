@@ -4,9 +4,8 @@ const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     //update password
-    password: '',
+    password: 'Queenb2020!',
     //update which database we are using
-    database: 'employeetracker'
 })
 
 connection.connect(function (err) {

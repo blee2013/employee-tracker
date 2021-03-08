@@ -1,4 +1,5 @@
 const inquirer = require('inquirer');
+const { connection, addDepartment, addRole, updateEmployeeRole } = require('./db');
 const DB = require('./db');
 
 
@@ -12,12 +13,27 @@ const questions = [{
             value: "VIEW_EMPLOYEES"
         },
         {
-            name: "Update An Employee",
-            value: "UPDATE_EMPLOYEE"
+            name: "View All Roles",
+            value: "VIEW_ROLES"
+        }, {
+            name: "View All Departments",
+            value: "VIEW_DEPARTMENTS"
         },
         {
             name: "Add an Employee",
             value: "ADD_EMPLOYEE"
+        },
+        {
+            name: "Add a Role",
+            value: "ADD_ROLE"
+        },
+        {
+            name: "Add a Department",
+            value: "ADD_DEPARTMENT"
+        },
+        {
+            name: "Update An Employee Role",
+            value: "UPDATE_EMPLOYEE"
         }
     ]
 },
@@ -26,15 +42,58 @@ const questions = [{
 
 // ask the user what they want to do
 function init() {
+    console.log (`
+    ---------------------------------------------------------------------------------------                                                
+     ________                          __                                              
+    /        |                        /  |                                             
+    *********/ _____  ____    _____   ** |  ______   __    __   ______    ______       
+    ** |__    /     \/    \  /      \ ** | /      \ /  |  /  | /      \  /      \      
+    **    |   *****  ***** |/ *****  |** |/******  |** |  ** |/******  |/******  |     
+    *****/    ** | ** | ** |** |  ** |** |** |  ** |** |  ** |**    ** |**    ** |     
+    ** |_____ ** | ** | ** |** |__** |** |** \__** |** \__** |********/ ********/      
+    **       |** | ** | ** |**    **/ ** |**    **/ **    ** |**       |**       |     
+    ********/ **/  **/  **/ ******    **/  ******/    ****** | *******/  *******/      
+                            ** |                    /  \__** |                         
+                            ** |                    **    **/                          
+                            **/                      ******/                           
+     __       __                                                                       
+    /  \     /  |                                                                      
+    **  \   /** |  ______   _______    ______    ______    ______    ______            
+    ***  \ /*** | /      \ /       \  /      \  /      \  /      \  /      \           
+    ****  /**** | ******  |*******  | ******  |/******  |/******  |/******  |          
+    ** ** **/** | /    ** |** |  ** | /    ** |** |  ** |**    ** |** |  **/           
+    ** |***/ ** |/******* |** |  ** |/******* |** \__** |********/ ** |                
+    ** | */  ** |**    ** |** |  ** |**    ** |**    ** |**       |** |                
+    **/      **/  *******/ **/   **/  *******/  ******* | *******/ **/                 
+                                               /  \__** |                              
+                                               **    **/                               
+                                                ******/                                                                    
+-----------------------------------------------------------------------------------------`)
     // add, delete, update, view
         // employees, roles, departments
         //9+ questions
 
     inquirer.prompt(questions).then(userResponse => {
         //now we know what they want to do
-        if (userResponse.whatToDo === 'VIEW_EMPLOYEES') {
+        if (userResponse.whatToDo === 'VIEW_EMPLOYEE') {
             viewEmployees();
+        } else if (userResponse.whatToDo === 'VIEW_DEPARTMENT') {
+            findAllDepartments();
+        } else if (userResponse.whatToDo === 'VIEW_ROLE') {
+            findAllRoles();
+        } else if (userResponse.whatToDo === 'ADD_EMPLOYEE') {
+            areYouFinished();
+        } else if (userResponse.whatToDo === 'ADD_DEPARTMENT') {
+            addDepartment();
+        } else if (userResponse.whatToDo === 'ADD_ROLE') {
+            addRole();
+        } else if (userResponse.whatToDo === 'UPDATE_ROLE') {
+           areYouFinished();
+        } else if (userResponse.whatToDo === 'EXIT') {
+           return areYouFinished();
         }
+
+
         //continue the if elses or use a switch
     })
 
@@ -54,6 +113,10 @@ function viewEmployees() {
 
 }
 // add employee
+function addEmployee(){
+    console.log("View employee fx");
+
+}
     // we need to know 
         // name of new employee - first and last
         // role id
@@ -80,7 +143,7 @@ function areYouFinished() {
             init()
         } else {
             console.log('have a great day');
-            process.exit()
+            connection.stop()
         }
         // either exit the process
 
