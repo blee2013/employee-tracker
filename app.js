@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
-const { connection, addDepartment, addRole, updateEmployeeRole } = require('./db');
+const db = require('./db');
+const { connection, addDepartment, addRole, updateEmployeeRole, areYouFinished } = require('./db');
 const DB = require('./db');
 
 
@@ -35,6 +36,7 @@ const questions = [{
             name: "Update An Employee Role",
             value: "UPDATE_EMPLOYEE"
         }
+       
     ]
 },
 ]
@@ -76,79 +78,47 @@ function init() {
     inquirer.prompt(questions).then(userResponse => {
         //now we know what they want to do
         if (userResponse.whatToDo === 'VIEW_EMPLOYEE') {
-            viewEmployees();
+            viewAllEmployees();
         } else if (userResponse.whatToDo === 'VIEW_DEPARTMENT') {
-            findAllDepartments();
+            viewAllDepartments();
         } else if (userResponse.whatToDo === 'VIEW_ROLE') {
-            findAllRoles();
+            viewAllRoles();
         } else if (userResponse.whatToDo === 'ADD_EMPLOYEE') {
-            areYouFinished();
+            addEmployee();
         } else if (userResponse.whatToDo === 'ADD_DEPARTMENT') {
             addDepartment();
         } else if (userResponse.whatToDo === 'ADD_ROLE') {
             addRole();
         } else if (userResponse.whatToDo === 'UPDATE_ROLE') {
            areYouFinished();
-        } else if (userResponse.whatToDo === 'EXIT') {
-           return areYouFinished();
-        }
+        } else if (userResponse.whatToDo === 'EXIT')
+           return exitApp();
+        });
 
 
         //continue the if elses or use a switch
-    })
+
 
 }
 
 // now we know what user wants to do
 // we focus on employees
 // view employees
-function viewEmployees() {
+function viewAllEmployees() {
     console.log("View employee fx");
     // query the database and display the data
-    // DB.findAllEmployees().then(employeeData => {
-    //     console.table(employeeData);
-    //     areYouFinished();
+    // DB.viewAllEmployees().then(result => {
+    //     console.table(result);
+    //     exitApp();
     // });
-
-
 }
-// add employee
-function addEmployee(){
-    console.log("View employee fx");
-
-}
-    // we need to know 
-        // name of new employee - first and last
-        // role id
-        // manager id
 
 
-// delete employee
-    // which employee to delete --- id
-
-// update employee
-    // which employee to update --- id
-    // what data points to change
-
-// areYouFinished function
-function areYouFinished() {
-    // ask the user if they want to to continue managing the employees
-    inquirer.prompt([{
-        type: 'confirm',
-        name: 'quit',
-        message: 'Would you like to continue?'
-    }]).then(userResponse => {
-        // restart the initial questions
-        if (userResponse.quit) {
-            init()
-        } else {
-            console.log('have a great day');
-            connection.stop()
-        }
-        // either exit the process
-
-    })
-
+function exitApp() {
+    console.log("exit");
+    process.exit();
 }
 
 init();
+
+    

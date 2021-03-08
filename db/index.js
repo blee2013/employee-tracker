@@ -4,26 +4,28 @@ const conTable = require('console.table');
 
 const connection = require('./connection');
 
+
+
 class DB {
     constructor(connection){
         this.connection = connection
     }
 
     //find all employees
-    findAllEmployees() {
+    viewAllEmployees() {
         let query = `SELECT * FROM employee`
         // we want promise based asyncness so we use the promise utility built in
         return this.connection.promise().query(query)
     }
 
-    //find all departments
-    // findAllDepartments() {
-    //     let query = `SELECT * FROM department`
-    //     return this.connection.promis().query(query)
-    // }
+    // // find all departments
+    viewAllDepartments() {
+        let query = `SELECT * FROM department`
+        return this.connection.promise().query(query)
+    }
 
-    //find all roles
-    findAllRoles() {
+    // //find all roles
+    viewAllRoles() {
         let query= `SELECT * FROM role`
         return this.connection.promise().query(query)
     }
@@ -40,7 +42,7 @@ class DB {
             `)
     }
 
-    // add new department
+    // // add new department
     addDepartment(name) {
         return this.connection.promise().query(
             `INSERT INTO department (name)
@@ -49,7 +51,7 @@ class DB {
         )
     }
 
-    //add new role
+    // //add new role
     addRole(title, salary, department_id) {
 
         return this.connection.promise().query(
@@ -59,7 +61,7 @@ class DB {
         )
     }
 
-    //update employee role
+    // //update employee role
 
     updateEmployeeRole(employee_id, new_role) {
         return this.connection.promise().query(
@@ -69,13 +71,6 @@ class DB {
     }
 
 
-    stopConnection(){
-    connection.stop();
-    }
-
-
-
-    
 };
 
 module.exports = new DB(connection);
